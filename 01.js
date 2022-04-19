@@ -1,36 +1,50 @@
-const foo = { name: 'tom', age: 30, nervous: false }
-const bar = { name: 'dick', age: 40, nervous: false }
-const baz = { name: 'harry', age: 50, nervous: true }
+// Before understanding the differences between undefined and null we must understand the similarities between them.
+// They belong to JavaScript's 7 primitive types.
+let primitiveTypes = [
+  'string',
+  'number',
+  'null',
+  'undefined',
+  'boolean',
+  'symbol',
+  'bigint',
+]
 
-;('Bad Code 💩')
+// They are falsy values. Values that evaluated to false when converting it to boolean using Boolean(value) or !!value.
+console.log(!!null) //logs false
+console.log(!!undefined) //logs false
 
-console.log(foo)
-console.log(bar)
-console.log(baz)
+console.log(Boolean(null)) //logs false
+console.log(Boolean(undefined)) //logs false
 
-;('Good Code ✅'   )
+// DIFFERENCES
+// undefined is the default value of a variable that has not been assigned a specific value.
+// Or a function that has no explicit return value ex. console.log(1).
+// Or a property that does not exist in an object. The JavaScript engine does this for us the assigning of undefined value.
 
-// Computed Property Names
-
-console.log('%c My Friends', 'color: orange; font-weight: bold;')
-console.log({ foo, bar, baz })
-
-// Console.table(...)
-console.table([foo, bar, baz])
-
-// // Console.time
-console.time('looper')
-
-let i = 0
-while (i < 1000000) {
-  i++
+let _thisIsUndefined
+const doNothing = () => {}
+const someObj = {
+  a: 'ay',
+  b: 'bee',
+  c: 'si',
 }
 
-console.timeEnd('looper')
+console.log(_thisIsUndefined) //logs undefined
+console.log(doNothing()) //logs undefined
+console.log(someObj['d']) //logs undefined
 
-// // Stack Trace Logs
+// null is "a value that represents no value". null is value that has been explicitly defined to a variable.
+// In this example we get a value of null when the fs.readFile method does not throw an error.
 
-const deleteMe = () => console.trace('bye bye database')
+fs.readFile('path/to/file', (e, data) => {
+  console.log(e) //it logs null when no error occurred
+  if (e) {
+    console.log(e)
+  }
+  console.log(data)
+})
 
-deleteMe()
-deleteMe()
+// When comparing null and undefined we get true when using == and false when using ===. You can read the reason here.
+console.log(null == undefined) // logs true
+console.log(null === undefined) // logs false
